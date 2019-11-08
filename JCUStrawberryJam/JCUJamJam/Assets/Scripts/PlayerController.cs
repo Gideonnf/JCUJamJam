@@ -18,14 +18,14 @@ public class PlayerController : MonoBehaviour
     float playerRotInput;
     Rigidbody rgdbdy;
     bool isGrounded = false;
-    bool holdFlare = false;
-
+    public bool holdFlare = false;
+    GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         rgdbdy = transform.GetComponent<Rigidbody>();
-
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
     }
 
@@ -88,10 +88,21 @@ public class PlayerController : MonoBehaviour
             //    transform.Rotate(0, -pRotationSpeed, 0);
            
             playerInput.z = Input.GetAxis("Vertical");
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
+            {
+                //if (!holdFlare)
+                    gameManager.GetComponent<GameManager>().FlareOn(1);
                 holdFlare = true;
-            else if (Input.GetKeyUp(KeyCode.E))
+                Debug.Log("TEST DRIVE");
+            }
+               
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+               // if (holdFlare)
+                    gameManager.GetComponent<GameManager>().FlareOff(1);
                 holdFlare = false;
+                Debug.Log("TEST DRIVE2");
+            }
         }
 
         if(playerID == 2)
@@ -99,10 +110,20 @@ public class PlayerController : MonoBehaviour
             //playerInput.x = Input.GetAxis("Horizontal2");
             playerRotInput = Input.GetAxis("Horizontal2");
             playerInput.z = Input.GetAxis("Vertical2");
-            if (Input.GetKeyDown(KeyCode.KeypadEnter))
+            if (Input.GetKey(KeyCode.KeypadEnter))
+            {
+                if (!holdFlare)
+                    gameManager.GetComponent<GameManager>().FlareOn(2);
                 holdFlare = true;
-            else if (Input.GetKeyUp(KeyCode.KeypadEnter))
+            }
+               
+            if (Input.GetKeyUp(KeyCode.KeypadEnter))
+            {
+                if (holdFlare)
+                    gameManager.GetComponent<GameManager>().FlareOff(2);
                 holdFlare = false;
+            }
+              
         }
 
 
