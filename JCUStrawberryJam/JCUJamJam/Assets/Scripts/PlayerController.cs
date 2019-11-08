@@ -21,19 +21,24 @@ public class PlayerController : MonoBehaviour
     public bool holdFlare = false;
     GameManager gameManager;
 
+    Vector3 startingPos;
+    Quaternion startingRot;
+
     // Start is called before the first frame update
     void Start()
     {
         rgdbdy = transform.GetComponent<Rigidbody>();
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-
+        startingPos = this.transform.position;
+        startingRot = this.transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
         // playerControls
-
+        Debug.Log("current Pos :" + transform.position);
+        Debug.Log("starting Pos : " + startingPos);
         PlayerControls();
     }
 
@@ -109,7 +114,18 @@ public class PlayerController : MonoBehaviour
               
         }
 
+    }
 
+    public int GetPlayerID()
+    {
+        return playerID;
+    }
+
+    public void RespawnPlayer()
+    {
+        // Anything else wil go here
+        this.transform.position = startingPos;
+        this.transform.rotation = startingRot;
     }
 
     public void OnCollisionEnter(Collision col)

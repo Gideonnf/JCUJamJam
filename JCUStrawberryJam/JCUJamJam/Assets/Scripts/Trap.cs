@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
+    public Animator trapAnim;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +16,18 @@ public class Trap : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Player Dead");
+        if(other.gameObject.tag == "Player")
+        {
+            other.GetComponent<PlayerController>().RespawnPlayer();
+        }
+        else if (other.tag =="Enemies")
+        {
+            // do sme shit i think
+        }
     }
 }

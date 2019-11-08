@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
 
-
     public GameObject[] enemies;
     public GameObject[] players;
     bool[] playersFlareIsOn = new bool[2];
@@ -24,14 +23,15 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+    }
 
-
+    private void Start()
+    {
         if (players == null)
             players = GameObject.FindGameObjectsWithTag("Player");
         if (enemies == null)
             enemies = GameObject.FindGameObjectsWithTag("Enemies");
 
-      
     }
 
     // Update is called once per frame
@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
     {
 
     }
-
 
     public void FindClosestPlayer()
     {
