@@ -16,10 +16,14 @@ public class PlayerController : MonoBehaviour
 
     float playerHorizontal;
     float playerRotInput;
-    Rigidbody rgdbdy;
     bool isGrounded = false;
+
+    bool holdingObject = false;
+    GameObject pickedObject = null;
+
     public bool holdFlare = false;
     GameManager gameManager;
+    Rigidbody rgdbdy;
 
     Vector3 startingPos;
     Quaternion startingRot;
@@ -70,6 +74,10 @@ public class PlayerController : MonoBehaviour
     {
         //playerInput = Vector3.zero;
         playerRotInput = 0;
+
+        // If holding an objec
+        // the player cant rotate
+
         if (playerID == 1)
         {
             //playerInput.x = Input.GetAxis("Horizontal");
@@ -78,18 +86,30 @@ public class PlayerController : MonoBehaviour
             //    transform.Rotate(0, -pRotationSpeed, 0);
            
             playerHorizontal = Input.GetAxis("Vertical");
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKey(KeyCode.F))
             {
                 //if (!holdFlare)
                     gameManager.GetComponent<GameManager>().FlareOn(1);
                 holdFlare = true;
             }
                
-            if (Input.GetKeyUp(KeyCode.E))
+            if (Input.GetKeyUp(KeyCode.F))
             {
                // if (holdFlare)
                     gameManager.GetComponent<GameManager>().FlareOff(1);
                 holdFlare = false;
+            }
+
+            if (holdingObject)
+            {
+                playerRotInput = 0;
+                     
+                // Dropping an object
+                if(Input.GetKeyUp(KeyCode.E))
+                {
+                    dropObject();
+                }
+
             }
         }
 
@@ -111,8 +131,13 @@ public class PlayerController : MonoBehaviour
                     gameManager.GetComponent<GameManager>().FlareOff(2);
                 holdFlare = false;
             }
-              
+
+           
         }
+
+       
+
+
 
     }
 
@@ -126,6 +151,32 @@ public class PlayerController : MonoBehaviour
         // Anything else wil go here
         this.transform.position = startingPos;
         this.transform.rotation = startingRot;
+    }
+
+    public void pickObject(GameObject pickedObject)
+    {
+        holdingObject = true;
+        this.pickedObject = pickedObject;
+        // Set the layer so it wont collide with the player
+        pickedObject.layer = 10;  
+        pickedObject.GetComponent<Rigidbody>().isKinematic = true;
+        pickedObject.transform.parent = this.transform;
+    }
+
+    void dropObject()
+    {
+        // Set the layer back to default
+        pickedObject.layer = 0;
+        // Turn back kninamtic to false
+        pickedObject.GetComponent<Rigidbody>().isKinematic = false;
+        // unparent the object
+        pickedObject.transform.parent = null;
+        //  Reset Rptatopm
+        pickedObject.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f));
+        //  remove the reference to the game object
+        pickedObject = null;
+        // No longer holding object
+        holdingObject = false;
     }
 
     public void OnCollisionEnter(Collision col)

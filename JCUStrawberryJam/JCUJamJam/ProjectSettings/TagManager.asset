@@ -16,8 +16,8 @@ TagManager:
   - 
   - P1Layer
   - P2Layer
-  - 
-  - 
+  - PickedObject
+  - Player
   - 
   - 
   - 
