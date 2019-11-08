@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 1
-  pMoveSpeed: 0
+  pMoveSpeed: 5
 --- !u!54 &624761761
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -683,7 +683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 2
-  pMoveSpeed: 0
+  pMoveSpeed: 8
 --- !u!54 &1124637110
 Rigidbody:
   m_ObjectHideFlags: 0
