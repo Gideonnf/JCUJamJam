@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     float pMoveSpeed;
     float pRotationSpeed = 1f;
 
-    Vector3 playerInput;
+    float playerHorizontal;
     float playerRotInput;
     Rigidbody rgdbdy;
     bool isGrounded = false;
@@ -33,25 +33,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // playerControls
-        
-
-        //if (playerRotInput != 0)
-        //    transform.Rotate(0, playerRotInput * 30 * Time.deltaTime, 0);
-        if (playerRotInput != 0)
-        {
-            Vector3 yRot = new Vector3(0, playerRotInput, 0);
-            yRot = yRot.normalized * pRotationSpeed;
-            Quaternion deltaRot = Quaternion.Euler(yRot);
-            rgdbdy.MoveRotation(rgdbdy.rotation * deltaRot);
-            //if (playerRotInput > 0)
-            //    transform.Rotate(0, pRotationSpeed, 0);
-            //else
-            //    transform.Rotate(0, -pRotationSpeed, 0);
-        }
-        else
-        {
-            rgdbdy.transform.Rotate(0, 0, 0);
-        }
 
         PlayerControls();
     }
@@ -59,26 +40,30 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
-
-
         // rgdbdy.MovePosition(rgdbdy.position + playerInput * pMoveSpeed * Time.fixedDeltaTime);
         Vector3 movement = transform.rotation * Vector3.forward;
-        if (playerInput.z > 0)
+        if (playerHorizontal > 0)
             rgdbdy.MovePosition(rgdbdy.position + movement * pMoveSpeed * Time.fixedDeltaTime);
-        else if(playerInput.z < 0)
+        else if(playerHorizontal < 0)
             rgdbdy.MovePosition(rgdbdy.position + -movement * pMoveSpeed * Time.fixedDeltaTime);
 
-
-        // var target = Quaternion.Euler(0, playerRotInput * 30, 0);
-
-        
+        if (playerRotInput != 0)
+        {
+            Vector3 yRot = new Vector3(0, playerRotInput, 0);
+            yRot = yRot.normalized * pRotationSpeed;
+            Quaternion deltaRot = Quaternion.Euler(yRot);
+            rgdbdy.MoveRotation(rgdbdy.rotation * deltaRot);
+        }
+        else
+        {
+            rgdbdy.transform.Rotate(0, 0, 0);
+        }
     }
 
 
     void PlayerControls()
     {
-        playerInput = Vector3.zero;
+        //playerInput = Vector3.zero;
         playerRotInput = 0;
         if (playerID == 1)
         {
@@ -87,7 +72,7 @@ public class PlayerController : MonoBehaviour
             //if (Input.GetKeyDown(KeyCode.A))
             //    transform.Rotate(0, -pRotationSpeed, 0);
            
-            playerInput.z = Input.GetAxis("Vertical");
+            playerHorizontal = Input.GetAxis("Vertical");
             if (Input.GetKey(KeyCode.E))
             {
                 //if (!holdFlare)
@@ -107,7 +92,7 @@ public class PlayerController : MonoBehaviour
         {
             //playerInput.x = Input.GetAxis("Horizontal2");
             playerRotInput = Input.GetAxis("Horizontal2");
-            playerInput.z = Input.GetAxis("Vertical2");
+            playerHorizontal = Input.GetAxis("Vertical2");
             if (Input.GetKey(KeyCode.KeypadEnter))
             {
     
