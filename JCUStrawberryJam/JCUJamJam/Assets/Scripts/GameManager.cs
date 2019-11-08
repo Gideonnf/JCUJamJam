@@ -78,11 +78,11 @@ public class GameManager : MonoBehaviour
 
     public void ResetTarget()
     {
-        Debug.Log("help me pls");
-        for(int i =0; i < enemies.Length; i++)
-        {
-            enemies[i].GetComponent<AINavAgent>().SetTarget(null);
-        }
+ 
+        //for(int i =0; i < enemies.Length; i++)
+        //{
+        //    enemies[i].GetComponent<AINavAgent>().SetTarget(null);
+        //}
     }
 
 

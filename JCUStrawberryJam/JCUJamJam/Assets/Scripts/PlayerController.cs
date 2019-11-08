@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
                 //if (!holdFlare)
                     gameManager.GetComponent<GameManager>().FlareOn(1);
                 holdFlare = true;
-                Debug.Log("TEST DRIVE");
             }
                
             if (Input.GetKeyUp(KeyCode.E))
@@ -101,7 +100,6 @@ public class PlayerController : MonoBehaviour
                // if (holdFlare)
                     gameManager.GetComponent<GameManager>().FlareOff(1);
                 holdFlare = false;
-                Debug.Log("TEST DRIVE2");
             }
         }
 
@@ -112,7 +110,7 @@ public class PlayerController : MonoBehaviour
             playerInput.z = Input.GetAxis("Vertical2");
             if (Input.GetKey(KeyCode.KeypadEnter))
             {
-                if (!holdFlare)
+    
                     gameManager.GetComponent<GameManager>().FlareOn(2);
                 holdFlare = true;
             }
