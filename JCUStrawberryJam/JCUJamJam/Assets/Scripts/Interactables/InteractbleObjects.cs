@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class InteractbleObjects : MonoBehaviour
 {
-    public enum CollisionState
-    {
-        ENTER,
-        STAY,
-        EXIT
-    }
 
     // Start is called before the first frame update
     void Start()

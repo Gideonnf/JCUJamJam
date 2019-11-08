@@ -2,6 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CollisionState
+{
+    ENTER,
+    STAY,
+    EXIT
+}
+
+public enum PlayerState
+{
+    ROBOT = 1,
+    HUMAN
+}
+
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
@@ -13,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     GameObject currentTarget;
 
+    
     // Start is called before the first frame update
     void Awake()
     {
