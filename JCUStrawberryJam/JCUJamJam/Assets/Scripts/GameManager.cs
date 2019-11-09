@@ -64,41 +64,25 @@ public class GameManager : MonoBehaviour
         for (int j = 0; j < enemies.Length; j++)
         {
             Vector3 diff = players[0].transform.position - enemies[j].transform.position;
-            //Vector3 diff2 = players[1].transform.position - enemies[j].transform.position;
+            Vector3 diff2 = players[1].transform.position - enemies[j].transform.position;
             float curDist = diff.sqrMagnitude;
-            //float curDist2 = diff2.sqrMagnitude;
+            float curDist2 = diff2.sqrMagnitude;
 
-            Debug.Log("Dist " + curDist + "  ");
-
-            if(curDist < 100)
+            if (curDist < distance && playersFlareIsOn[0])
             {
-                if (curDist < distance && playersFlareIsOn[0])
-                {
-                    closest = players[0];
-                    distance = curDist;
-                }
+                closest = players[0];
+                otherOne = players[1];
+                distance = curDist;
             }
-            else
+
+            if(curDist2 < distance && playersFlareIsOn[1])
             {
-                closest = null;
+                closest = players[1];
+                otherOne = players[0];
+                distance = curDist;
             }
-  
-            //if (curDist2 < 100)
-            //{
-            //    if (curDist2 < distance && playersFlareIsOn[1])
-            //    {
-            //        closest = players[1];
-            //        distance = curDist;
-            //    }
-            //}
-            //else
-            //{
-            //    closest = null;
-            //}
-
-
-
-            enemies[j].GetComponent<AINavAgent>().SetTarget(closest);
+            
+             enemies[j].GetComponent<AINavAgent>().SetTarget(closest);
            
             
         }
