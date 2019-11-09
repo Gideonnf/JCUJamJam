@@ -27,6 +27,10 @@ public class PressurePlate : InteractbleObjects
                     {
                         LinkedObject.GetComponent<ChargingPad>().isActivated = true;
                     }
+                    if(LinkedObject.GetComponent<Door>() != null)
+                    {
+                        LinkedObject.GetComponent<Door>().isOpened = true;
+                    }
                 }
             }
             // if the player standing is the same player needed
