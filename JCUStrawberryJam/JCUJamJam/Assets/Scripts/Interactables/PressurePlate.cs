@@ -51,11 +51,11 @@ public class PressurePlate : InteractbleObjects
             {
                 LinkedObject.GetComponent<Trap>().trapDisabled = false;
             }
-            else if (LinkedObject.GetComponent<ChargingPad>() != null)
+            if (LinkedObject.GetComponent<ChargingPad>() != null)
             {
                 LinkedObject.GetComponent<ChargingPad>().isActivated = false;
             }
-            else if (LinkedObject.GetComponent<Door>() != null)
+            if (LinkedObject.GetComponent<Door>() != null)
             {
                 LinkedObject.GetComponent<Door>().isOpened = false;
             }

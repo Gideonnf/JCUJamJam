@@ -49,6 +49,9 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized]
     public bool isPulling;
 
+    public GameObject flareLight;
+    public GameObject baseLight;
+
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +79,10 @@ public class PlayerController : MonoBehaviour
         Debug.Log("is Pulling : " + isPulling);
         // rgdbdy.MovePosition(rgdbdy.position + playerInput * pMoveSpeed * Time.fixedDeltaTime);
         Vector3 movement = transform.rotation * Vector3.forward;
+
+        if (isDead)
+            return;
+
         if (playerHorizontal > 0)
         {
             isMoving = true;
@@ -199,19 +206,19 @@ public class PlayerController : MonoBehaviour
         //    transform.Rotate(0, -pRotationSpeed, 0);
 
         playerHorizontal = Input.GetAxis("Vertical");
-        //if (Input.GetKey(KeyCode.F))
-        //{
-        //    //if (!holdFlare)
-        //    gameManager.GetComponent<GameManager>().FlareOn(1);
-        //    holdFlare = true;
-        //}
+        if (Input.GetKey(KeyCode.F))
+        {
+            //if (!holdFlare)
+            gameManager.GetComponent<GameManager>().FlareOn(1);
+            holdFlare = true;
+        }
 
-        //if (Input.GetKeyUp(KeyCode.F))
-        //{
-        //    // if (holdFlare)
-        //    gameManager.GetComponent<GameManager>().FlareOff(1);
-        //    holdFlare = false;
-        //}
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            // if (holdFlare)
+            gameManager.GetComponent<GameManager>().FlareOff(1);
+            holdFlare = false;
+        }
 
         if (holdingObject)
         {
