@@ -30,7 +30,11 @@ public class Trap : MonoBehaviour
 
         if(other.gameObject.tag == "Player")
         {
-            other.GetComponent<PlayerController>().RespawnPlayer();
+            PlayerController playerController = other.GetComponent<PlayerController>();
+            playerController.isDead = true;
+            playerController.isMoving = false;
+            playerController.isPushing = false;
+            //other.GetComponent<PlayerController>().RespawnPlayer();
         }
         else if (other.tag =="Enemies")
         {

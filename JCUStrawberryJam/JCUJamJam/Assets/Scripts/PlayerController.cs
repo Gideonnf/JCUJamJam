@@ -208,6 +208,9 @@ public class PlayerController : MonoBehaviour
     {
         //isDead = true;
         // Anything else wil go here
+        isDead = false;
+        isMoving = false;
+        isPushing = false;
         this.transform.position = startingPos;
         this.transform.rotation = startingRot;
     }
