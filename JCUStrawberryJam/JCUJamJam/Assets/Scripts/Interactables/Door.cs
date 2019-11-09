@@ -19,5 +19,7 @@ public class Door : MonoBehaviour
     void Update()
     {
         doorAnim.SetBool("isOpened", isOpened);
+
+        
     }
 }

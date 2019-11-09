@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
     public bool isPushing;
     [System.NonSerialized]
     public bool isDead;
+    [System.NonSerialized]
+    public bool isPulling;
 
 
     // Start is called before the first frame update
@@ -71,21 +73,50 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log("is Pulling : " + isPulling);
         // rgdbdy.MovePosition(rgdbdy.position + playerInput * pMoveSpeed * Time.fixedDeltaTime);
         Vector3 movement = transform.rotation * Vector3.forward;
         if (playerHorizontal > 0)
         {
-            rgdbdy.MovePosition(rgdbdy.position + movement * (pMoveSpeed - speedDebuff) * Time.fixedDeltaTime);
             isMoving = true;
+            rgdbdy.MovePosition(rgdbdy.position + movement * (pMoveSpeed - speedDebuff) * Time.fixedDeltaTime);
+            if (holdingObject)
+            {
+                Debug.Log("is Pulling AHAHAHAH  : " + isPulling);
+                isPushing = true;
+                isPulling = false;
+            }
+            else
+            {
+                Debug.Log("is Pulling BABABAB  : " + isPulling);
+                isPushing = false;
+               isPulling = false;
+            }
         }
         else if (playerHorizontal < 0)
         {
-            rgdbdy.MovePosition(rgdbdy.position + -movement * (pMoveSpeed - speedDebuff) * Time.fixedDeltaTime);
             isMoving = true;
+            rgdbdy.MovePosition(rgdbdy.position + -movement * (pMoveSpeed - speedDebuff) * Time.fixedDeltaTime);
+            if (holdingObject)
+            {
+                Debug.Log("is Pulling HERERERE : " + isPulling);
+                isPulling = true;
+                isPushing = false;
+            }
+            else
+            {
+                Debug.Log("is Pulling THERERE : " + isPulling);
+                isPushing = false;
+                isPulling = false;
+            }
         }
         else
         {
+            Debug.Log("is Pulling MEHEHEHE : " + isPulling);
+
             isMoving = false;
+           // isPulling = false;
+            //isPushing = false;
         }
 
         if (playerRotInput != 0)
@@ -121,7 +152,7 @@ public class PlayerController : MonoBehaviour
         // the player cant rotate
         if (playerID == (int)PlayerState.ROBOT)
         {
-            Debug.Log("Speed Debuff : " + speedDebuff);
+           // Debug.Log("Speed Debuff : " + speedDebuff);
             if (energyLevel <= 0)
                 speedDebuff = 6;
             else
@@ -238,7 +269,7 @@ public class PlayerController : MonoBehaviour
         pickedObject.GetComponent<Rigidbody>().isKinematic = true;
         pickedObject.transform.parent = this.transform;
 
-        isPushing = true;
+       
     }
 
     void dropObject()
@@ -255,7 +286,7 @@ public class PlayerController : MonoBehaviour
         pickedObject = null;
         // No longer holding object
         holdingObject = false;
-
+        isPulling = false;
         isPushing = false;
     }
 
