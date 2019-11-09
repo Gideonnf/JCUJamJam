@@ -144,14 +144,14 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.KeypadEnter))
             {
 
-                gameManager.GetComponent<GameManager>().FlareOn(2);
+                gameManager.GetComponent<GameManager>().FlareOn(1);
                 holdFlare = true;
             }
 
             if (Input.GetKeyUp(KeyCode.KeypadEnter))
             {
                 if (holdFlare)
-                    gameManager.GetComponent<GameManager>().FlareOff(2);
+                    gameManager.GetComponent<GameManager>().FlareOff(1);
                 holdFlare = false;
             }
 
@@ -165,19 +165,19 @@ public class PlayerController : MonoBehaviour
         //    transform.Rotate(0, -pRotationSpeed, 0);
 
         playerHorizontal = Input.GetAxis("Vertical");
-        if (Input.GetKey(KeyCode.F))
-        {
-            //if (!holdFlare)
-            gameManager.GetComponent<GameManager>().FlareOn(1);
-            holdFlare = true;
-        }
+        //if (Input.GetKey(KeyCode.F))
+        //{
+        //    //if (!holdFlare)
+        //    gameManager.GetComponent<GameManager>().FlareOn(1);
+        //    holdFlare = true;
+        //}
 
-        if (Input.GetKeyUp(KeyCode.F))
-        {
-            // if (holdFlare)
-            gameManager.GetComponent<GameManager>().FlareOff(1);
-            holdFlare = false;
-        }
+        //if (Input.GetKeyUp(KeyCode.F))
+        //{
+        //    // if (holdFlare)
+        //    gameManager.GetComponent<GameManager>().FlareOff(1);
+        //    holdFlare = false;
+        //}
 
         if (holdingObject)
         {
@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerID == (int)PlayerState.ROBOT)
         {
-            Debug.Log("Energy level : " + energyLevel);
+        //    Debug.Log("Energy level : " + energyLevel);
 
             if(!isCharging)
             {
