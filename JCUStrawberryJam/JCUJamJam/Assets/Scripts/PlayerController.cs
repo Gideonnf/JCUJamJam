@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+   
+
     [Header("Player ID to determine which player")]
     [SerializeField]
     [Range(1,2)]
@@ -12,7 +14,8 @@ public class PlayerController : MonoBehaviour
     [Header("Player Speed")]
     [SerializeField]
     float pMoveSpeed;
-    float pRotationSpeed = 1f;
+    [SerializeField]
+    float pRotationSpeed = 80f;
 
     float playerHorizontal;
     float playerRotInput;
@@ -28,6 +31,18 @@ public class PlayerController : MonoBehaviour
     Vector3 startingPos;
     Quaternion startingRot;
 
+    [Header("Robot Variables")]
+    float energyLevel;
+    public float drainSpeed = 0.5f;
+
+    [System.NonSerialized]
+    public bool isMoving;
+    [System.NonSerialized]
+    public bool isPushing;
+    [System.NonSerialized]
+    public bool isDead;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,15 +50,17 @@ public class PlayerController : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         startingPos = this.transform.position;
         startingRot = this.transform.rotation;
+        energyLevel = 100;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // playerControls
-        Debug.Log("current Pos :" + transform.position);
-        Debug.Log("starting Pos : " + startingPos);
+
+        // Update player controls
         PlayerControls();
+        // Update player stats
+        PlayerUpdate();
     }
 
 
@@ -52,16 +69,36 @@ public class PlayerController : MonoBehaviour
         // rgdbdy.MovePosition(rgdbdy.position + playerInput * pMoveSpeed * Time.fixedDeltaTime);
         Vector3 movement = transform.rotation * Vector3.forward;
         if (playerHorizontal > 0)
+        {
             rgdbdy.MovePosition(rgdbdy.position + movement * pMoveSpeed * Time.fixedDeltaTime);
+            isMoving = true;
+        }
         else if(playerHorizontal < 0)
+        {
             rgdbdy.MovePosition(rgdbdy.position + -movement * pMoveSpeed * Time.fixedDeltaTime);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
 
         if (playerRotInput != 0)
         {
-            Vector3 yRot = new Vector3(0, playerRotInput, 0);
-            yRot = yRot.normalized * pRotationSpeed;
-            Quaternion deltaRot = Quaternion.Euler(yRot);
-            rgdbdy.MoveRotation(rgdbdy.rotation * deltaRot);
+            //Vector3 yRot = new Vector3(0, playerRotInput, 0);
+            //yRot = yRot.normalized * pRotationSpeed;
+            //Quaternion deltaRot = Quaternion.Euler(yRot);
+            //rgdbdy.MoveRotation(rgdbdy.rotation * deltaRot);
+            Debug.Log("player Rot " + playerRotInput);
+            //Vector3 rotateVec = new Vector3(playerHorizontal, playerRotInput, 0);
+            if(playerRotInput < 0)
+            {
+                transform.Rotate(Vector3.up * -pRotationSpeed * Time.deltaTime, Space.Self);
+            }
+            else if (playerRotInput > 0)
+            {
+                transform.Rotate(Vector3.up * pRotationSpeed * Time.deltaTime, Space.Self);
+            }
         }
         else
         {
@@ -77,54 +114,32 @@ public class PlayerController : MonoBehaviour
 
         // If holding an objec
         // the player cant rotate
-
-        if (playerID == 1)
+        if (playerID == (int)PlayerState.ROBOT)
         {
-            //playerInput.x = Input.GetAxis("Horizontal");
-            playerRotInput = Input.GetAxis("Horizontal");
-            //if (Input.GetKeyDown(KeyCode.A))
-            //    transform.Rotate(0, -pRotationSpeed, 0);
-           
-            playerHorizontal = Input.GetAxis("Vertical");
-            if (Input.GetKey(KeyCode.F))
+            if(energyLevel > 0)
             {
-                //if (!holdFlare)
-                    gameManager.GetComponent<GameManager>().FlareOn(1);
-                holdFlare = true;
-            }
-               
-            if (Input.GetKeyUp(KeyCode.F))
-            {
-               // if (holdFlare)
-                    gameManager.GetComponent<GameManager>().FlareOff(1);
-                holdFlare = false;
-            }
-
-            if (holdingObject)
-            {
-                playerRotInput = 0;
-                     
-                // Dropping an object
-                if(Input.GetKeyUp(KeyCode.E))
-                {
-                    dropObject();
-                }
-
+                RobotControls();
             }
         }
 
-        if(playerID == 2)
+        if(playerID == (int)PlayerState.HUMAN)
         {
+            HumanControls();
+        }
+    }
+
+    void HumanControls()
+    {
             //playerInput.x = Input.GetAxis("Horizontal2");
             playerRotInput = Input.GetAxis("Horizontal2");
             playerHorizontal = Input.GetAxis("Vertical2");
             if (Input.GetKey(KeyCode.KeypadEnter))
             {
-    
-                    gameManager.GetComponent<GameManager>().FlareOn(2);
+
+                gameManager.GetComponent<GameManager>().FlareOn(2);
                 holdFlare = true;
             }
-               
+
             if (Input.GetKeyUp(KeyCode.KeypadEnter))
             {
                 if (holdFlare)
@@ -132,13 +147,56 @@ public class PlayerController : MonoBehaviour
                 holdFlare = false;
             }
 
-           
+    }
+
+    void RobotControls()
+    {
+        //playerInput.x = Input.GetAxis("Horizontal");
+        playerRotInput = Input.GetAxis("Horizontal");
+        //if (Input.GetKeyDown(KeyCode.A))
+        //    transform.Rotate(0, -pRotationSpeed, 0);
+
+        playerHorizontal = Input.GetAxis("Vertical");
+        if (Input.GetKey(KeyCode.F))
+        {
+            //if (!holdFlare)
+            gameManager.GetComponent<GameManager>().FlareOn(1);
+            holdFlare = true;
         }
 
-       
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            // if (holdFlare)
+            gameManager.GetComponent<GameManager>().FlareOff(1);
+            holdFlare = false;
+        }
 
+        if (holdingObject)
+        {
+            playerRotInput = 0;
 
+            // Dropping an object
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                dropObject();
+            }
 
+        }
+    }
+
+    void PlayerUpdate()
+    {
+        if (playerID == (int)PlayerState.ROBOT)
+        {
+            //Debug.Log("Energy level : " + energyLevel);
+
+            //energyLevel -= drainSpeed * Time.deltaTime;
+
+        }
+        if (playerID == (int)PlayerState.HUMAN)
+        {
+
+        }
     }
 
     public int GetPlayerID()
@@ -148,6 +206,7 @@ public class PlayerController : MonoBehaviour
 
     public void RespawnPlayer()
     {
+        //isDead = true;
         // Anything else wil go here
         this.transform.position = startingPos;
         this.transform.rotation = startingRot;
@@ -161,6 +220,8 @@ public class PlayerController : MonoBehaviour
         pickedObject.layer = 10;  
         pickedObject.GetComponent<Rigidbody>().isKinematic = true;
         pickedObject.transform.parent = this.transform;
+
+        isPushing = true;
     }
 
     void dropObject()
@@ -177,6 +238,8 @@ public class PlayerController : MonoBehaviour
         pickedObject = null;
         // No longer holding object
         holdingObject = false;
+
+        isPushing = false;
     }
 
     public void OnCollisionEnter(Collision col)

@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: f0f7caf247c77bb4a935b7ca065b53cc
+guid: 438ef7cef2adb5a4cafaf63e1f2da853
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
-      74: 4970035939050967306
-    second: RCOP@Idle
+      74: 1827226128182048838
+    second: Take 001
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: RCOP@Idle
-      takeName: RCOP@Idle
+      name: Take 001
+      takeName: Take 001
       internalID: 0
       firstFrame: 1
-      lastFrame: 30
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
