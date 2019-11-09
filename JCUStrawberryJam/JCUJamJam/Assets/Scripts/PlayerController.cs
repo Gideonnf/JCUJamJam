@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
         // unparent the object
         pickedObject.transform.parent = null;
         //  Reset Rptatopm
-        pickedObject.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f));
+        pickedObject.transform.rotation = pickedObject.GetComponent<CrateObjects>().startingRot;
         //  remove the reference to the game object
         pickedObject = null;
         // No longer holding object
