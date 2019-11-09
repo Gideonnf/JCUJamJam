@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour
     public GameObject baseLight;
     public GameObject EnergyText;
 
+    [System.NonSerialized]
+    public bool gameEnd;
+
 
     // Start is called before the first frame update
     void Start()
@@ -68,7 +71,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (gameEnd)
+            return;
         // Update player controls
         PlayerControls();
         // Update player stats
