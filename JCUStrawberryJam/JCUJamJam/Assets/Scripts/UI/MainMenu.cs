@@ -1,14 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Door : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
-    public Animator doorAnim;
-
-    [System.NonSerialized]
-    public bool isOpened;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +14,16 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        doorAnim.SetBool("isOpened", isOpened);
-
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void StartGame()
     {
-        AudioManager.instance.Play("door");
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

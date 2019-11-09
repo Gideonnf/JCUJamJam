@@ -119,6 +119,9 @@ public class PlayerController : MonoBehaviour
             //isPushing = false;
         }
 
+        if (isMoving)
+            AudioManager.instance.Play("walk");
+
         if (playerRotInput != 0)
         {
             //Vector3 yRot = new Vector3(0, playerRotInput, 0);

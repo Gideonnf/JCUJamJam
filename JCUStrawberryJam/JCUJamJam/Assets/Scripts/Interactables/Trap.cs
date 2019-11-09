@@ -31,6 +31,8 @@ public class Trap : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
+            AudioManager.instance.Play("hurt1");
+            AudioManager.instance.Play("trap");
             playerController.isDead = true;
             playerController.isMoving = false;
             playerController.isPushing = false;
