@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
         playerHorizontal = Input.GetAxis("Vertical2");
         if (Input.GetKey(KeyCode.KeypadEnter))
         {
+            flareLight.SetActive(true);
 
             gameManager.GetComponent<GameManager>().FlareOn(1);
             holdFlare = true;
@@ -193,6 +194,7 @@ public class PlayerController : MonoBehaviour
         {
             if (holdFlare)
                 gameManager.GetComponent<GameManager>().FlareOff(1);
+            flareLight.SetActive(false);
             holdFlare = false;
         }
 
@@ -209,12 +211,15 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.F))
         {
             //if (!holdFlare)
+            flareLight.SetActive(true);
             gameManager.GetComponent<GameManager>().FlareOn(1);
             holdFlare = true;
         }
 
         if (Input.GetKeyUp(KeyCode.F))
         {
+            flareLight.SetActive(false);
+
             // if (holdFlare)
             gameManager.GetComponent<GameManager>().FlareOff(1);
             holdFlare = false;
