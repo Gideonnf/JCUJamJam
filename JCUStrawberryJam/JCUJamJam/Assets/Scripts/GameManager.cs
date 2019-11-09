@@ -27,14 +27,15 @@ public class GameManager : MonoBehaviour
 
     GameObject currentTarget;
 
-    
+
     // Start is called before the first frame update
     void Awake()
     {
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
-        } else
+        }
+        else
         {
             instance = this;
         }
@@ -64,35 +65,51 @@ public class GameManager : MonoBehaviour
         for (int j = 0; j < enemies.Length; j++)
         {
             Vector3 diff = players[0].transform.position - enemies[j].transform.position;
-            Vector3 diff2 = players[1].transform.position - enemies[j].transform.position;
+            //Vector3 diff2 = players[1].transform.position - enemies[j].transform.position;
             float curDist = diff.sqrMagnitude;
-            float curDist2 = diff2.sqrMagnitude;
+            //float curDist2 = diff2.sqrMagnitude;
 
-            if (curDist < distance && playersFlareIsOn[0])
+            Debug.Log("Dist " + curDist + "  ");
+
+            if (curDist < 100)
             {
-                closest = players[0];
-                otherOne = players[1];
-                distance = curDist;
+                if (curDist < distance && playersFlareIsOn[0])
+                {
+                    closest = players[0];
+                    distance = curDist;
+                }
+            }
+            else
+            {
+                closest = null;
             }
 
-            if(curDist2 < distance && playersFlareIsOn[1])
-            {
-                closest = players[1];
-                otherOne = players[0];
-                distance = curDist;
-            }
-            
-             enemies[j].GetComponent<AINavAgent>().SetTarget(closest);
-           
-            
+            //if (curDist2 < 100)
+            //{
+            //    if (curDist2 < distance && playersFlareIsOn[1])
+            //    {
+            //        closest = players[1];
+            //        distance = curDist;
+            //    }
+            //}
+            //else
+            //{
+            //    closest = null;
+            //}
+
+
+
+            enemies[j].GetComponent<AINavAgent>().SetTarget(closest);
+
+
         }
-       
+
         //  return closest;
     }
 
     public void ResetTarget()
     {
- 
+
         //for(int i =0; i < enemies.Length; i++)
         //{
         //    enemies[i].GetComponent<AINavAgent>().SetTarget(null);

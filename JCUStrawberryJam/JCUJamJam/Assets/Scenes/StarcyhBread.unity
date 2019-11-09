@@ -1250,19 +1250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef5ed1351657e849986be309036db5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 4.97
-  viewAngle: 58
-  targetMask:
-    m_Bits: 0
-  obstacleMask:
-    m_Bits: 0
-  visibleTargets: []
-  meshResolution: 0
-  edgeResolveIterations: 0
-  edgeDstThreshold: 0
-  maskCutawayDst: 0.1
-  viewMeshFilter: {fileID: 0}
-  viewMesh: {fileID: 0}
 --- !u!65 &795227069
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1700,7 +1687,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerID: 1
   pMoveSpeed: 5
+  pRotationSpeed: 80
   holdFlare: 0
+  drainSpeed: 0.5
 --- !u!1 &1483115381
 GameObject:
   m_ObjectHideFlags: 0
@@ -2197,7 +2186,6 @@ MonoBehaviour:
   - {fileID: 1177192142}
   players:
   - {fileID: 1335706194}
-  - {fileID: 1909777248}
 --- !u!1 &1851479710
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,7 +2387,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerID: 2
   pMoveSpeed: 8
+  pRotationSpeed: 80
   holdFlare: 0
+  drainSpeed: 0.5
 --- !u!54 &1909777250
 Rigidbody:
   m_ObjectHideFlags: 0

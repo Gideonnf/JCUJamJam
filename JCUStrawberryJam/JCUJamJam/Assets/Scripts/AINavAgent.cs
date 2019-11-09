@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class AINavAgent : MonoBehaviour
 {
 
-    enum AI_STATE { IDLE, CHASE, ATTACK,RETURN}
+    enum AI_STATE { IDLE, CHASE, ATTACK, RETURN }
     [SerializeField]
     AI_STATE curAiState;
     GameObject targetPlayer;
@@ -24,26 +24,28 @@ public class AINavAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(curAiState)
+        switch (curAiState)
         {
-            case AI_STATE.IDLE: agent.isStopped = true; break;
+            case AI_STATE.IDLE: break;
             case AI_STATE.CHASE:
-                agent.isStopped = false;
                 agent.stoppingDistance = 5;
                 if (Vector3.Distance(targetPlayer.transform.position, transform.position) > 5)
                     agent.SetDestination(targetPlayer.transform.position);
                 else
-                curAiState = AI_STATE.ATTACK;
+                    curAiState = AI_STATE.ATTACK;
                 break;
-            case AI_STATE.ATTACK:   break;
-            case AI_STATE.RETURN:targetPlayer = null; agent.stoppingDistance = 0; agent.SetDestination(originalPos); break;
+            case AI_STATE.ATTACK: curAiState = AI_STATE.RETURN; break;
+            case AI_STATE.RETURN: agent.isStopped = false; targetPlayer = null; agent.stoppingDistance = 0; agent.SetDestination(originalPos); break;
         }
 
-        if(curAiState == AI_STATE.RETURN)
+        if (curAiState == AI_STATE.RETURN)
         {
-            Debug.Log(Vector3.Distance(transform.position, originalPos));
-            if (Vector3.Distance(transform.position , originalPos) < 2f)
+            //   Debug.Log(Vector3.Distance(transform.position, originalPos));
+            if (Vector3.Distance(transform.position, originalPos) < 2f)
+            {
                 curAiState = AI_STATE.IDLE;
+                agent.isStopped = true;
+            }
         }
 
     }
@@ -52,20 +54,20 @@ public class AINavAgent : MonoBehaviour
     {
         if (target != null && curAiState == AI_STATE.IDLE)
         {
-            agent.isStopped = false;
+
 
             targetPlayer = target;
             curAiState = AI_STATE.CHASE;
-         
-            
+            agent.isStopped = false;
+
 
 
         }
-        else if(target == null)
+        else if (target == null)
         {
             agent.isStopped = true;
         }
-            
+
     }
 
     void ReturnToPatrol()
@@ -76,8 +78,11 @@ public class AINavAgent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && curAiState == AI_STATE.IDLE)
         {
+            targetPlayer = other.gameObject;
+            curAiState = AI_STATE.CHASE;
+            agent.isStopped = false;
             Debug.Log("Fire");
         }
     }

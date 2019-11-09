@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-   
+
 
     [Header("Player ID to determine which player")]
     [SerializeField]
-    [Range(1,2)]
+    [Range(1, 2)]
     int playerID; // Player 1 WASD, Player 2 Arrow Key
 
     [Header("Player Speed")]
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     public bool isPushing;
     [System.NonSerialized]
     public bool isDead;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
             rgdbdy.MovePosition(rgdbdy.position + movement * (pMoveSpeed - speedDebuff) * Time.fixedDeltaTime);
             isMoving = true;
         }
-        else if(playerHorizontal < 0)
+        else if (playerHorizontal < 0)
         {
             rgdbdy.MovePosition(rgdbdy.position + -movement * (pMoveSpeed - speedDebuff) * Time.fixedDeltaTime);
             isMoving = true;
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             //rgdbdy.MoveRotation(rgdbdy.rotation * deltaRot);
             //Debug.Log("player Rot " + playerRotInput);
             //Vector3 rotateVec = new Vector3(playerHorizontal, playerRotInput, 0);
-            if(playerRotInput < 0)
+            if (playerRotInput < 0)
             {
                 transform.Rotate(Vector3.up * -pRotationSpeed * Time.deltaTime, Space.Self);
             }
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
             RobotControls();
         }
 
-        if(playerID == (int)PlayerState.HUMAN)
+        if (playerID == (int)PlayerState.HUMAN)
         {
             HumanControls();
         }
@@ -138,22 +138,22 @@ public class PlayerController : MonoBehaviour
 
     void HumanControls()
     {
-            //playerInput.x = Input.GetAxis("Horizontal2");
-            playerRotInput = Input.GetAxis("Horizontal2");
-            playerHorizontal = Input.GetAxis("Vertical2");
-            if (Input.GetKey(KeyCode.KeypadEnter))
-            {
+        //playerInput.x = Input.GetAxis("Horizontal2");
+        playerRotInput = Input.GetAxis("Horizontal2");
+        playerHorizontal = Input.GetAxis("Vertical2");
+        if (Input.GetKey(KeyCode.KeypadEnter))
+        {
 
-                gameManager.GetComponent<GameManager>().FlareOn(2);
-                holdFlare = true;
-            }
+            gameManager.GetComponent<GameManager>().FlareOn(1);
+            holdFlare = true;
+        }
 
-            if (Input.GetKeyUp(KeyCode.KeypadEnter))
-            {
-                if (holdFlare)
-                    gameManager.GetComponent<GameManager>().FlareOff(2);
-                holdFlare = false;
-            }
+        if (Input.GetKeyUp(KeyCode.KeypadEnter))
+        {
+            if (holdFlare)
+                gameManager.GetComponent<GameManager>().FlareOff(1);
+            holdFlare = false;
+        }
 
     }
 
@@ -165,19 +165,19 @@ public class PlayerController : MonoBehaviour
         //    transform.Rotate(0, -pRotationSpeed, 0);
 
         playerHorizontal = Input.GetAxis("Vertical");
-        if (Input.GetKey(KeyCode.F))
-        {
-            //if (!holdFlare)
-            gameManager.GetComponent<GameManager>().FlareOn(1);
-            holdFlare = true;
-        }
+        //if (Input.GetKey(KeyCode.F))
+        //{
+        //    //if (!holdFlare)
+        //    gameManager.GetComponent<GameManager>().FlareOn(1);
+        //    holdFlare = true;
+        //}
 
-        if (Input.GetKeyUp(KeyCode.F))
-        {
-            // if (holdFlare)
-            gameManager.GetComponent<GameManager>().FlareOff(1);
-            holdFlare = false;
-        }
+        //if (Input.GetKeyUp(KeyCode.F))
+        //{
+        //    // if (holdFlare)
+        //    gameManager.GetComponent<GameManager>().FlareOff(1);
+        //    holdFlare = false;
+        //}
 
         if (holdingObject)
         {
@@ -196,15 +196,15 @@ public class PlayerController : MonoBehaviour
     {
         if (playerID == (int)PlayerState.ROBOT)
         {
-            Debug.Log("Energy level : " + energyLevel);
+            //    Debug.Log("Energy level : " + energyLevel);
 
-            if(!isCharging)
+            if (!isCharging)
             {
                 energyLevel -= drainSpeed * Time.deltaTime;
                 if (energyLevel < 0)
                     energyLevel = 0;
             }
-           
+
 
         }
         if (playerID == (int)PlayerState.HUMAN)
@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour
         holdingObject = true;
         this.pickedObject = pickedObject;
         // Set the layer so it wont collide with the player
-        pickedObject.layer = 10;  
+        pickedObject.layer = 10;
         pickedObject.GetComponent<Rigidbody>().isKinematic = true;
         pickedObject.transform.parent = this.transform;
 
@@ -261,7 +261,7 @@ public class PlayerController : MonoBehaviour
 
     public void RechargeBatteries(float rechargeSpeed)
     {
-        if(isCharging)
+        if (isCharging)
         {
             energyLevel += rechargeSpeed * Time.deltaTime;
             if (energyLevel >= 100)
@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "ground")
+        if (col.gameObject.tag == "ground")
         {
             isGrounded = true;
         }
