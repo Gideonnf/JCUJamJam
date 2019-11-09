@@ -35,7 +35,7 @@ public class AINavAgent : MonoBehaviour
                 else
                 curAiState = AI_STATE.ATTACK;
                 break;
-            case AI_STATE.ATTACK:  curAiState = AI_STATE.RETURN;  break;
+            case AI_STATE.ATTACK:   break;
             case AI_STATE.RETURN:targetPlayer = null; agent.stoppingDistance = 0; agent.SetDestination(originalPos); break;
         }
 
@@ -70,6 +70,15 @@ public class AINavAgent : MonoBehaviour
 
     void ReturnToPatrol()
     {
-       
+        curAiState = AI_STATE.RETURN;
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            Debug.Log("Fire");
+        }
     }
 }
