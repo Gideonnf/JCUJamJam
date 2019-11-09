@@ -32,8 +32,11 @@ public class PlayerController : MonoBehaviour
     Quaternion startingRot;
 
     [Header("Robot Variables")]
-    float energyLevel;
     public float drainSpeed = 0.5f;
+    // For Robot
+    float speedDebuff;
+    float energyLevel;
+
 
     [System.NonSerialized]
     public bool isMoving;
@@ -70,12 +73,12 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = transform.rotation * Vector3.forward;
         if (playerHorizontal > 0)
         {
-            rgdbdy.MovePosition(rgdbdy.position + movement * pMoveSpeed * Time.fixedDeltaTime);
+            rgdbdy.MovePosition(rgdbdy.position + movement * (pMoveSpeed - speedDebuff) * Time.fixedDeltaTime);
             isMoving = true;
         }
         else if(playerHorizontal < 0)
         {
-            rgdbdy.MovePosition(rgdbdy.position + -movement * pMoveSpeed * Time.fixedDeltaTime);
+            rgdbdy.MovePosition(rgdbdy.position + -movement * (pMoveSpeed - speedDebuff) * Time.fixedDeltaTime);
             isMoving = true;
         }
         else
@@ -89,7 +92,7 @@ public class PlayerController : MonoBehaviour
             //yRot = yRot.normalized * pRotationSpeed;
             //Quaternion deltaRot = Quaternion.Euler(yRot);
             //rgdbdy.MoveRotation(rgdbdy.rotation * deltaRot);
-            Debug.Log("player Rot " + playerRotInput);
+            //Debug.Log("player Rot " + playerRotInput);
             //Vector3 rotateVec = new Vector3(playerHorizontal, playerRotInput, 0);
             if(playerRotInput < 0)
             {
@@ -116,10 +119,13 @@ public class PlayerController : MonoBehaviour
         // the player cant rotate
         if (playerID == (int)PlayerState.ROBOT)
         {
-            if(energyLevel > 0)
-            {
-                RobotControls();
-            }
+            Debug.Log("Speed Debuff : " + speedDebuff);
+            if (energyLevel <= 0)
+                speedDebuff = 6;
+            else
+                speedDebuff = 0.0f;
+
+            RobotControls();
         }
 
         if(playerID == (int)PlayerState.HUMAN)
@@ -188,9 +194,11 @@ public class PlayerController : MonoBehaviour
     {
         if (playerID == (int)PlayerState.ROBOT)
         {
-            //Debug.Log("Energy level : " + energyLevel);
+            Debug.Log("Energy level : " + energyLevel);
 
-            //energyLevel -= drainSpeed * Time.deltaTime;
+            energyLevel -= 25 * Time.deltaTime;
+            if (energyLevel < 0)
+                energyLevel = 0;
 
         }
         if (playerID == (int)PlayerState.HUMAN)
