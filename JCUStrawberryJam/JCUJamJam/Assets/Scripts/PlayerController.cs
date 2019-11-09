@@ -34,6 +34,13 @@ public class PlayerController : MonoBehaviour
     [Header("Robot Variables")]
     float energyLevel;
     public float drainSpeed = 0.5f;
+
+    [System.NonSerialized]
+    public bool isMoving;
+    [System.NonSerialized]
+    public bool isPushing;
+    [System.NonSerialized]
+    public bool isDead;
     
 
     // Start is called before the first frame update
@@ -62,9 +69,19 @@ public class PlayerController : MonoBehaviour
         // rgdbdy.MovePosition(rgdbdy.position + playerInput * pMoveSpeed * Time.fixedDeltaTime);
         Vector3 movement = transform.rotation * Vector3.forward;
         if (playerHorizontal > 0)
+        {
             rgdbdy.MovePosition(rgdbdy.position + movement * pMoveSpeed * Time.fixedDeltaTime);
+            isMoving = true;
+        }
         else if(playerHorizontal < 0)
+        {
             rgdbdy.MovePosition(rgdbdy.position + -movement * pMoveSpeed * Time.fixedDeltaTime);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
 
         if (playerRotInput != 0)
         {
@@ -81,7 +98,6 @@ public class PlayerController : MonoBehaviour
             else if (playerRotInput > 0)
             {
                 transform.Rotate(Vector3.up * pRotationSpeed * Time.deltaTime, Space.Self);
-
             }
         }
         else
@@ -190,6 +206,7 @@ public class PlayerController : MonoBehaviour
 
     public void RespawnPlayer()
     {
+        //isDead = true;
         // Anything else wil go here
         this.transform.position = startingPos;
         this.transform.rotation = startingRot;
@@ -203,6 +220,8 @@ public class PlayerController : MonoBehaviour
         pickedObject.layer = 10;  
         pickedObject.GetComponent<Rigidbody>().isKinematic = true;
         pickedObject.transform.parent = this.transform;
+
+        isPushing = true;
     }
 
     void dropObject()
@@ -219,6 +238,8 @@ public class PlayerController : MonoBehaviour
         pickedObject = null;
         // No longer holding object
         holdingObject = false;
+
+        isPushing = false;
     }
 
     public void OnCollisionEnter(Collision col)
