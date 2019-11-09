@@ -16,9 +16,17 @@ public class CrateObjects : InteractbleObjects
         
     }
 
-    public override void CollisionInteraction(PlayerController playerController, CollisionState colState)
+    public override void CollisionInteraction(Collision collider, CollisionState colState)
     {
-        base.CollisionInteraction(playerController, colState);
+
+        base.CollisionInteraction(collider, colState);
+
+        PlayerController playerController = collider.gameObject.GetComponent<PlayerController>();
+
+        if (playerController == null)
+            return;
+
+
         if (Input.GetKey(KeyCode.E))
         {
             if (playerController.GetPlayerID() == 1)

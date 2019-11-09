@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [Header("Player Speed")]
     [SerializeField]
     float pMoveSpeed;
+    [SerializeField]
     float pRotationSpeed = 1f;
 
     float playerHorizontal;
@@ -160,9 +161,9 @@ public class PlayerController : MonoBehaviour
     {
         if (playerID == (int)PlayerState.ROBOT)
         {
-            Debug.Log("Energy level : " + energyLevel);
+            //Debug.Log("Energy level : " + energyLevel);
 
-            energyLevel -= drainSpeed * Time.deltaTime;
+            //energyLevel -= drainSpeed * Time.deltaTime;
 
         }
         if (playerID == (int)PlayerState.HUMAN)

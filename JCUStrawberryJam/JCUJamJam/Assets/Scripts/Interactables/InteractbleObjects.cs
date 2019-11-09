@@ -19,73 +19,73 @@ public class InteractbleObjects : MonoBehaviour
         
     }
 
-    public virtual void CollisionInteraction(PlayerController playerController, CollisionState colState)
+    public virtual void CollisionInteraction(Collision collision, CollisionState colState)
     {
 
     }
 
-    public virtual void TriggerInteraction(PlayerController playerController, CollisionState colState)
+    public virtual void TriggerInteraction(Collider collision, CollisionState colState)
     {
 
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+        //PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
         // Check if player controller exist in the game object
-        if (playerController)
-        {
+        //if (playerController)
+        //{
             // If it does check for player 2
-            CollisionInteraction(playerController, CollisionState.ENTER);
-        }
+            CollisionInteraction(collision, CollisionState.ENTER);
+        //}
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+       // PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
         // Check if player controller exist in the game object
-        if (playerController)
-        {
+        //if (playerController)
+       // {
             // If it does check for player 2
-            CollisionInteraction(playerController, CollisionState.STAY);
-        }
+            CollisionInteraction(collision, CollisionState.STAY);
+      //  }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+     //   PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
         // Check if player controller exist in the game object
-        if (playerController)
-        {
+      //  if (playerController)
+     //   {
             // If it does check for player 2
-            CollisionInteraction(playerController, CollisionState.EXIT);
-        }
+            CollisionInteraction(collision, CollisionState.EXIT);
+       // }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
-        if (playerController)
-        {
-            TriggerInteraction(playerController, CollisionState.ENTER);
-        }
+      //  PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+      //  if (playerController)
+      //  {
+            TriggerInteraction(other, CollisionState.ENTER);
+      //  }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
-        if (playerController)
-        {
-            TriggerInteraction(playerController, CollisionState.STAY);
-        }
+        //PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+       // if (playerController)
+      //  {
+            TriggerInteraction(other, CollisionState.STAY);
+      //  }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
-        if (playerController)
-        {
-            TriggerInteraction(playerController, CollisionState.EXIT);
-        }
+        //PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+      //  if (playerController)
+       // {
+            TriggerInteraction(other, CollisionState.EXIT);
+     //   }
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Trap : MonoBehaviour
 {
     public Animator trapAnim;
+    [System.NonSerialized]
+    public bool trapDisabled;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,11 @@ public class Trap : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Player Dead");
+
+        // if the trap is disabled, nth gon happen yooo
+        if (trapDisabled)
+            return;
+
         if(other.gameObject.tag == "Player")
         {
             other.GetComponent<PlayerController>().RespawnPlayer();

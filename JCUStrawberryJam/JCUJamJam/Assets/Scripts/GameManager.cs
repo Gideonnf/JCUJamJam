@@ -11,7 +11,8 @@ public enum CollisionState
 
 public enum PlayerState
 {
-    ROBOT = 1,
+    NONE = 0,
+    ROBOT,
     HUMAN
 }
 
