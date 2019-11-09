@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class CrateObjects : InteractbleObjects
 {
+    public Quaternion startingRot;
+
+    private void Start()
+    {
+        startingRot = this.transform.rotation;
+    }
 
     public override void CollisionInteraction(Collision collider, CollisionState colState)
     {

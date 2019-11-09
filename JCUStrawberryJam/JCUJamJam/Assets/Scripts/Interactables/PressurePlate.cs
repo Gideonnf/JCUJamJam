@@ -55,6 +55,10 @@ public class PressurePlate : InteractbleObjects
             {
                 LinkedObject.GetComponent<ChargingPad>().isActivated = false;
             }
+            else if (LinkedObject.GetComponent<Door>() != null)
+            {
+                LinkedObject.GetComponent<Door>().isOpened = false;
+            }
         }
     }
 }
