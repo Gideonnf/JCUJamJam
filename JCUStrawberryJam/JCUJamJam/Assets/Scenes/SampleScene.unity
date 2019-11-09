@@ -851,7 +851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerID: 2
   pMoveSpeed: 5
-  pRotationSpeed: 5
+  pRotationSpeed: 95
   holdFlare: 0
   drainSpeed: 0.5
 --- !u!65 &429587729
@@ -4153,7 +4153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerID: 1
   pMoveSpeed: 8
-  pRotationSpeed: 3.5
+  pRotationSpeed: 80
   holdFlare: 0
   drainSpeed: 5
 --- !u!65 &1967514370
@@ -5087,7 +5087,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 45
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -5112,8 +5112,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2124816071}
-  m_LocalRotation: {x: 0.47856742, y: -0.0013587312, z: 0.00074057, w: 0.8780495}
-  m_LocalPosition: {x: 3.8699996, y: 28.215, z: -18.269997}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

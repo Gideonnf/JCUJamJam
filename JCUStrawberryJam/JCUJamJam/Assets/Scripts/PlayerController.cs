@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float pMoveSpeed;
     [SerializeField]
-    float pRotationSpeed = 1f;
+    float pRotationSpeed = 80f;
 
     float playerHorizontal;
     float playerRotInput;
@@ -68,10 +68,21 @@ public class PlayerController : MonoBehaviour
 
         if (playerRotInput != 0)
         {
-            Vector3 yRot = new Vector3(0, playerRotInput, 0);
-            yRot = yRot.normalized * pRotationSpeed;
-            Quaternion deltaRot = Quaternion.Euler(yRot);
-            rgdbdy.MoveRotation(rgdbdy.rotation * deltaRot);
+            //Vector3 yRot = new Vector3(0, playerRotInput, 0);
+            //yRot = yRot.normalized * pRotationSpeed;
+            //Quaternion deltaRot = Quaternion.Euler(yRot);
+            //rgdbdy.MoveRotation(rgdbdy.rotation * deltaRot);
+            Debug.Log("player Rot " + playerRotInput);
+            //Vector3 rotateVec = new Vector3(playerHorizontal, playerRotInput, 0);
+            if(playerRotInput < 0)
+            {
+                transform.Rotate(Vector3.up * -pRotationSpeed * Time.deltaTime, Space.Self);
+            }
+            else if (playerRotInput > 0)
+            {
+                transform.Rotate(Vector3.up * pRotationSpeed * Time.deltaTime, Space.Self);
+
+            }
         }
         else
         {
