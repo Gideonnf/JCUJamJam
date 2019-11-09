@@ -26,6 +26,7 @@ public class PlayerAnimator : MonoBehaviour
         playerAnim.SetBool("Pushing", playerController.isPushing);
         playerAnim.SetBool("Running", playerController.isMoving);
         playerAnim.SetBool("Dead", playerController.isDead);
+        playerAnim.SetBool("Pulling", playerController.isPulling);
 
         if(playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dead"))
         {
