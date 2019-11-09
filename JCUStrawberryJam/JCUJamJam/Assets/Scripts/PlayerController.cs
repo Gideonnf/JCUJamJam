@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject flareLight;
     public GameObject baseLight;
+    public GameObject EnergyText;
 
 
     // Start is called before the first frame update
@@ -250,6 +252,8 @@ public class PlayerController : MonoBehaviour
                 if (energyLevel < 0)
                     energyLevel = 0;
             }
+
+            EnergyText.GetComponent<TextMeshProUGUI>().text = ((int)energyLevel).ToString();
 
 
         }
