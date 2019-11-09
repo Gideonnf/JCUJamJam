@@ -7,17 +7,6 @@ public class PressurePlate : InteractbleObjects
     public PlayerState playerNeeded;
     public bool objectNeeded;
     public GameObject LinkedObject;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public override void TriggerInteraction(Collider other, CollisionState colState)
     {
@@ -30,7 +19,14 @@ public class PressurePlate : InteractbleObjects
                 if (playerController.GetPlayerID() == (int)playerNeeded)
                 {
                     // Trigger
-                    LinkedObject.GetComponent<Trap>().trapDisabled = true;
+                    if(LinkedObject.GetComponent<Trap>() != null)
+                    {
+                        LinkedObject.GetComponent<Trap>().trapDisabled = true;
+                    }
+                    else if (LinkedObject.GetComponent<ChargingPad>() != null)
+                    {
+                        LinkedObject.GetComponent<ChargingPad>().isActivated = true;
+                    }
                 }
             }
             // if the player standing is the same player needed
@@ -39,13 +35,22 @@ public class PressurePlate : InteractbleObjects
                 InteractbleObjects collidedObject = other.gameObject.GetComponent<InteractbleObjects>();
                 if (collidedObject)
                 {
-                    LinkedObject.GetComponent<Trap>().trapDisabled = true;
+                    if(LinkedObject)
+                        LinkedObject.GetComponent<Trap>().trapDisabled = true;
                 }
             }
         }
         else if (colState == CollisionState.EXIT)
         {
-            LinkedObject.GetComponent<Trap>().trapDisabled = false;
+            // Trigger
+            if (LinkedObject.GetComponent<Trap>() != null)
+            {
+                LinkedObject.GetComponent<Trap>().trapDisabled = false;
+            }
+            else if (LinkedObject.GetComponent<ChargingPad>() != null)
+            {
+                LinkedObject.GetComponent<ChargingPad>().isActivated = false;
+            }
         }
     }
 }

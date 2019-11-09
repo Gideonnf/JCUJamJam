@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     // For Robot
     float speedDebuff;
     float energyLevel;
+    [System.NonSerialized]
+    public bool isCharging = false;
 
 
     [System.NonSerialized]
@@ -196,9 +198,13 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Energy level : " + energyLevel);
 
-            energyLevel -= 25 * Time.deltaTime;
-            if (energyLevel < 0)
-                energyLevel = 0;
+            if(!isCharging)
+            {
+                energyLevel -= drainSpeed * Time.deltaTime;
+                if (energyLevel < 0)
+                    energyLevel = 0;
+            }
+           
 
         }
         if (playerID == (int)PlayerState.HUMAN)
@@ -251,6 +257,16 @@ public class PlayerController : MonoBehaviour
         holdingObject = false;
 
         isPushing = false;
+    }
+
+    public void RechargeBatteries(float rechargeSpeed)
+    {
+        if(isCharging)
+        {
+            energyLevel += rechargeSpeed * Time.deltaTime;
+            if (energyLevel >= 100)
+                energyLevel = 100;
+        }
     }
 
     public void OnCollisionEnter(Collision col)

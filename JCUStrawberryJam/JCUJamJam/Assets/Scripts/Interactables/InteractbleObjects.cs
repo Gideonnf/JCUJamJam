@@ -24,7 +24,7 @@ public class InteractbleObjects : MonoBehaviour
 
     }
 
-    public virtual void TriggerInteraction(Collider collision, CollisionState colState)
+    public virtual void TriggerInteraction(Collider other, CollisionState colState)
     {
 
     }
