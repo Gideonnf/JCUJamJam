@@ -40,6 +40,8 @@ public class Trap : MonoBehaviour
         }
         else if (other.tag =="Enemies")
         {
+            AINavAgent aiController = other.GetComponent<AINavAgent>();
+            aiController.isDead = true;
             // do sme shit i think
         }
     }

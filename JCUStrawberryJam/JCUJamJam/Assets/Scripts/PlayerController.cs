@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     [System.NonSerialized]
     public bool gameEnd;
-
+    bool playOncce = false;
 
     // Start is called before the first frame update
     void Start()
@@ -132,8 +132,17 @@ public class PlayerController : MonoBehaviour
             //isPushing = false;
         }
 
-        if (isMoving)
-            AudioManager.instance.Play("walk");
+        if (isMoving && !playOncce)
+        {
+            playOncce = true;
+            AudioManager.instance.PlayLoop("walk");
+        }
+        else
+        {
+            AudioManager.instance.Stop("walk");
+            playOncce = false;
+        }
+          
 
         if (playerRotInput != 0)
         {
@@ -188,7 +197,7 @@ public class PlayerController : MonoBehaviour
         //playerInput.x = Input.GetAxis("Horizontal2");
         playerRotInput = Input.GetAxis("Horizontal2");
         playerHorizontal = Input.GetAxis("Vertical2");
-        if (Input.GetKey(KeyCode.KeypadEnter))
+        if (Input.GetKey(KeyCode.RightShift))
         {
             flareLight.SetActive(true);
 
@@ -196,7 +205,7 @@ public class PlayerController : MonoBehaviour
             holdFlare = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.KeypadEnter))
+        if (Input.GetKeyUp(KeyCode.RightShift))
         {
             if (holdFlare)
                 gameManager.GetComponent<GameManager>().FlareOff(1);

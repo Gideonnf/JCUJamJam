@@ -39,8 +39,9 @@ public class PressurePlate : InteractbleObjects
                 InteractbleObjects collidedObject = other.gameObject.GetComponent<InteractbleObjects>();
                 if (collidedObject)
                 {
-                    if(LinkedObject)
-                        LinkedObject.GetComponent<Trap>().trapDisabled = true;
+                    if (LinkedObject)
+                        LinkedObject.GetComponent<Door>().isOpened = true;
+                        //LinkedObject.GetComponent<Trap>().trapDisabled = true;
                 }
             }
         }

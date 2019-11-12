@@ -13,6 +13,9 @@ public class AINavAgent : MonoBehaviour
     NavMeshAgent agent;
     Vector3 originalPos;
 
+    public Animator AIAnim;
+    public bool isDead;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +27,23 @@ public class AINavAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AIAnim.SetBool("isDead", isDead);
+
+        if (isDead)
+            return;
+
         switch (curAiState)
         {
-            case AI_STATE.IDLE: break;
+            case AI_STATE.IDLE:
+                for(int i = 0; i < 2; i++)
+                {
+                    if (Vector3.Distance(GameManager.Instance.players[i].transform.position, transform.position) < 12)
+                    {
+                        SetTarget(GameManager.Instance.players[i]);
+                    }
+                }
+
+                break;
             case AI_STATE.CHASE:
                 agent.stoppingDistance = 5;
                 if (Vector3.Distance(targetPlayer.transform.position, transform.position) > 5)
@@ -34,7 +51,10 @@ public class AINavAgent : MonoBehaviour
                 else
                     curAiState = AI_STATE.ATTACK;
                 break;
-            case AI_STATE.ATTACK: curAiState = AI_STATE.RETURN; break;
+            case AI_STATE.ATTACK:
+                curAiState = AI_STATE.RETURN;
+
+                break;
             case AI_STATE.RETURN: agent.isStopped = false; targetPlayer = null; agent.stoppingDistance = 0; agent.SetDestination(originalPos); break;
         }
 
